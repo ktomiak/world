@@ -4,7 +4,9 @@ import cors from "cors";
 import sequelize from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import postRoutes from "./routes/postRoutes.js";
-import userRoutes from "./routes/userRoutes.js"; 
+import userRoutes from "./routes/userRoutes.js";
+import User from "./models/User.js";
+import bcrypt from "bcrypt";
 
 dotenv.config();
 const app = express();
@@ -23,8 +25,29 @@ console.log("🚦 routes mounted: /api/auth, /api/posts, /api/users");
 const PORT = process.env.PORT || 5000;
 
 // Synchronizacja bazy
-sequelize.sync().then(() => {
-  console.log("✅ Baza danych gotowa");
-  console.log("🔑 JWT_SECRET =", process.env.JWT_SECRET);
-  app.listen(PORT, () => console.log(`🚀 Server działa na porcie ${PORT}`));
-});
+const init = async () => {
+  try {
+    await sequelize.sync({ alter: true });
+    console.log("✅ Baza danych gotowa");
+
+    // Sprawdzamy, czy istnieje użytkownik
+    const userCount = await User.count();
+    if (userCount === 0) {
+      const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10);
+      const admin = await User.create({
+        username: "Losketh",
+        email: "krzysztof.tomiak@wp.pl",
+        password: hashedPassword,
+        role: "admin"
+      });
+      console.log("👑 Domyślny admin utworzony:", admin.dataValues);
+    } else {
+      console.log("Użytkownicy już istnieją, nie tworzę admina.");
+    }
+    app.listen(PORT, () => console.log(`🚀 Server działa na porcie ${PORT}`));
+  } catch (err) {
+      console.error("Błąd inicjalizacji:", err);
+    }
+  };
+
+init();

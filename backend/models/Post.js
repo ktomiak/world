@@ -3,6 +3,10 @@ import sequelize from "../config/db.js";
 import User from "./User.js";
 
 const Post = sequelize.define("Post", {
+  userId: {            
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
   title: {
     type: DataTypes.STRING,
     allowNull: false
@@ -10,7 +14,11 @@ const Post = sequelize.define("Post", {
   content: {
     type: DataTypes.TEXT,
     allowNull: false
-  }
+  },
+  isDeleted: { 
+    type: DataTypes.BOOLEAN, 
+    defaultValue: false 
+  },
 });
 
 User.hasMany(Post, { foreignKey: "userId" });

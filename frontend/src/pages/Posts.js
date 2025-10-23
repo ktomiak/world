@@ -16,7 +16,7 @@ export default function Posts() {
           <li key={p.id}>
             <h4>{p.title}</h4>
             <p>{p.content}</p>
-            <small>{p.User?.username}</small>
+            <small>{p.author}</small>
           </li>
         ))}
       </ul>

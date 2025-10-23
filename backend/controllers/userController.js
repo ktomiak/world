@@ -1,7 +1,6 @@
 import bcrypt from "bcryptjs";
 import User from "../models/User.js";
 
-// Pobranie zalogowanego użytkownika
 export const getMe = async (req, res) => {
   try {
     const user = await User.findByPk(req.user.id, {
@@ -13,7 +12,6 @@ export const getMe = async (req, res) => {
   }
 };
 
-// Aktualizacja username i/lub hasła
 export const updateMe = async (req, res) => {
   try {
     const user = await User.findByPk(req.user.id);
@@ -28,4 +26,24 @@ export const updateMe = async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: "Nie udało się zaktualizować użytkownika" });
   }
+};
+
+  export const getAllUsers = async (req, res) => {
+  if (req.user.role !== "admin") return res.status(403).json({ message: "Brak uprawnień" });
+  const users = await User.findAll({ attributes: ["id", "username", "email", "role"] });
+  res.json(users);
+};
+
+export const updateUserRoles = async (req, res) => {
+
+  const { id } = req.params;
+  const { role} = req.body;
+
+  const user = await User.findByPk(id);
+  if (!user) return res.status(404).json({ message: "Użytkownik nie znaleziony" });
+
+  if (role) user.role = role;
+
+  await user.save();
+  res.json({ message: "Uprawnienia zaktualizowane", user });
 };

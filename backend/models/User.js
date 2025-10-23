@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/db.js";
+import { ROLES } from "../constants/roles.js";
 
 const User = sequelize.define("User", {
   username: {
@@ -15,7 +16,12 @@ const User = sequelize.define("User", {
   password: {
     type: DataTypes.STRING,
     allowNull: false
-  }
+  },
+  role: {
+    type: DataTypes.ENUM(...Object.values(ROLES)),
+    allowNull: false,
+    defaultValue: ROLES.USER,
+  },
 });
 
 export default User;
