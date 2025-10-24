@@ -15,6 +15,10 @@ const Post = sequelize.define("Post", {
     type: DataTypes.TEXT,
     allowNull: false
   },
+  isEdited: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
   isDeleted: { 
     type: DataTypes.BOOLEAN, 
     defaultValue: false 
