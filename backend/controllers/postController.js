@@ -23,14 +23,31 @@ export const getPosts = async (req, res) => {
 
     const formatted = posts.map((p) => ({
       id: p.id,
+      isDeleted: p.isDeleted,
       title: p.isDeleted ? "Post usunięty" : p.title,
       content: p.isDeleted ? "" : p.content,
       author: p.User ? p.User.username : "Nieznany użytkownik",
+      authorId: p.User ? p.User.id : null,
     }));
 
     res.json(formatted);
   } catch (err) {
     console.error("Błąd getPosts:", err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+export const editPost = async (req, res) => {
+  try {
+    const { title, content } = req.body;
+
+    if (title !== undefined) req.post.title = title;
+    if (content !== undefined) req.post.content = content;
+
+    await req.post.save();
+
+    res.json({ message: "Post zaktualizowany", post: req.post });
+  } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };

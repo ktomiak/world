@@ -13,20 +13,24 @@ import AdminPanel from "./pages/AdminPanel";
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [isAdmin, setIsAdmin] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
 
   // 🔹 Dodaj ten useEffect:
   useEffect(() => {
     if (token) {
       try {
         const user = jwtDecode(token);
-        console.log("Zdekodowany token:", user); // 👀 do diagnostyki
+        console.log("Zdekodowany token:", user);
+        setCurrentUser(user);
         setIsAdmin(user.role === "admin");
       } catch (err) {
         console.error("Błąd dekodowania tokena:", err);
         setIsAdmin(false);
+         setCurrentUser(null);
       }
     } else {
       setIsAdmin(false);
+      setCurrentUser(null);
     }
   }, [token]);
 
@@ -48,7 +52,7 @@ function App() {
         <Route path="/" element={<Navigate to="/posts" />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
-        <Route path="/posts" element={<Posts />} />
+        <Route path="/posts" element={<Posts token={token} currentUser={currentUser} />} />
         <Route
           path="/profile"
           element={token ? <Profile token={token} /> : <Navigate to="/login" />}
