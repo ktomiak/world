@@ -1,53 +1,40 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import sequelize from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import postRoutes from "./routes/postRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-import User from "./models/User.js";
-import bcrypt from "bcrypt";
+import sequelize from "./config/db.js";
 
 dotenv.config();
+
 const app = express();
+app.use(cors());
 app.use(express.json());
 
-app.use(cors({
-  origin: "http://localhost:3000", // frontend
-  credentials: true // jeśli używasz cookies
-}));
-
+// Mount routes
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/users", userRoutes);
-console.log("🚦 routes mounted: /api/auth, /api/posts, /api/users");
 
 const PORT = process.env.PORT || 5000;
 
-// Synchronizacja bazy
 const init = async () => {
   try {
-    await sequelize.sync({ alter: true });
-    console.log("✅ Baza danych gotowa");
+    await sequelize.authenticate();
+    console.log("✅ Połączono z bazą danych");
 
-    // Sprawdzamy, czy istnieje użytkownik
-    const userCount = await User.count();
-    if (userCount === 0) {
-      const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10);
-      const admin = await User.create({
-        username: "Losketh",
-        email: "krzysztof.tomiak@wp.pl",
-        password: hashedPassword,
-        role: "admin"
-      });
-      console.log("👑 Domyślny admin utworzony:", admin.dataValues);
-    } else {
-      console.log("Użytkownicy już istnieją, nie tworzę admina.");
-    }
-    app.listen(PORT, () => console.log(`🚀 Server działa na porcie ${PORT}`));
+    
+    console.log("🚦 Uruchom serwer i zastosuj migracje ręcznie przez Sequelize CLI");
+    console.log('npm run db:migrate');
+    console.log('npm run db:seed');
+
+    app.listen(PORT, () => {
+      console.log(`Server działa na porcie ${PORT}`);
+    });
   } catch (err) {
-      console.error("Błąd inicjalizacji:", err);
-    }
-  };
+    console.error("Błąd inicjalizacji:", err);
+  }
+};
 
 init();

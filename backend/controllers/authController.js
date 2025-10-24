@@ -28,7 +28,7 @@ export const login = async (req, res) => {
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) return res.status(400).json({ message: "Nieprawidłowe hasło" });
 
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "1d" });
+    const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
     res.json({ token });
   } catch (err) {
     res.status(500).json({ error: err.message });

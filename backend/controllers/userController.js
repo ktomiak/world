@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import User from "../models/User.js";
+import { ROLES } from "../constants/roles.js";
 
 export const getMe = async (req, res) => {
   try {
@@ -29,9 +30,24 @@ export const updateMe = async (req, res) => {
 };
 
   export const getAllUsers = async (req, res) => {
-  if (req.user.role !== "admin") return res.status(403).json({ message: "Brak uprawnień" });
-  const users = await User.findAll({ attributes: ["id", "username", "email", "role"] });
-  res.json(users);
+  try {
+    if (!req.user) {
+      return res.status(401).json({ error: "Brak autoryzacji" });
+    }
+
+    if (req.user.role !== "admin") {
+      return res.status(403).json({ error: "Brak uprawnień" });
+    }
+
+    const users = await User.findAll({
+      attributes: ["id", "username", "email", "role", "createdAt"],
+    });
+
+    res.json(users); // <-- tablica!
+  } catch (err) {
+    console.error("Błąd getAllUsers:", err);
+    res.status(500).json({ error: "Nie udało się pobrać listy użytkowników" });
+  }
 };
 
 export const updateUserRoles = async (req, res) => {
@@ -46,4 +62,13 @@ export const updateUserRoles = async (req, res) => {
 
   await user.save();
   res.json({ message: "Uprawnienia zaktualizowane", user });
+};
+
+export const getRoles = async (req, res) => {
+  try {
+    res.json(Object.values(ROLES));
+  } catch (err) {
+    console.error("Błąd pobierania ról:", err);
+    res.status(500).json({ error: "Nie udało się pobrać listy ról" });
+  }
 };

@@ -54,3 +54,29 @@ export const createPost = async (token, data) => {
   });
   return res.json();
 };
+
+export const getAllUsers = async (token) => {
+  const res = await fetch(`${API_URL}/users`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.json();
+};
+
+export const updateUserRole = async (token, userId, role) => {
+  const res = await fetch(`${API_URL}/users/${userId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ role }),
+  });
+  return res.json();
+};
+
+export const getRoles = async (token) => {
+  const res = await fetch(`${API_URL}/users/roles`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.json();
+};

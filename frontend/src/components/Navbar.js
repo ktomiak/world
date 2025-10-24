@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export default function Navbar({ token, onLogout }) {
+export default function Navbar({ token, isAdmin, onLogout }) {
   return (
     <nav
       style={{
@@ -14,6 +14,7 @@ export default function Navbar({ token, onLogout }) {
         <Link to="/posts">📖 Posty</Link>{" "}
         {token && <Link to="/profile">👤 Profil</Link>}
         {token && <Link to="/add">✏️ Dodaj post</Link>}
+        {isAdmin && <Link to="/admin">⚙️ Panel Admina</Link>}
       </div>
       <div>
         {!token ? (
