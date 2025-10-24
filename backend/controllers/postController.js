@@ -89,7 +89,7 @@ export const editPost = async (req, res) => {
     }
 
     if (edited) {
-      post.isEdited = true;
+      req.post.isEdited = true; 
     }
 
     await req.post.save();
