@@ -56,7 +56,7 @@ export const getPosts = async (req, res) => {
     // 🔹 Formatowanie wyniku do frontendu
     const formatted = posts.map((p) => ({
       id: p.id,
-      title: p.isDeleted ? "Post usunięty" : p.title,
+      title: p.isDeleted ? "" : p.title,
       content: p.isDeleted ? "" : p.content,
       author: p.User ? p.User.username : "Nieznany użytkownik",
       userId: p.User ? p.User.id : null,
