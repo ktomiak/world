@@ -1,4 +1,5 @@
 import Post from "../models/Post.js";
+import { ROLES } from "../constants/roles.js";
 
 export const canEdit = async (req, res, next) => {
   try {
@@ -15,7 +16,7 @@ export const canEdit = async (req, res, next) => {
     const role = req.user.role;
     const isOwner = post.userId === req.user.id;
 
-    if (role === "admin" || role === "editor" || (role === "user" && isOwner)) {
+    if (role === ROLES.admin || role === ROLES.editor || (role === ROLES.user && isOwner)) {
       return next();
     }
 
