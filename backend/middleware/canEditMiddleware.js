@@ -15,8 +15,7 @@ export const canEdit = async (req, res, next) => {
 
     const role = req.user.role;
     const isOwner = post.userId === req.user.id;
-    console.log(role,ROLES.admin,ROLES.editor,ROLES.user);
-    if (role === ROLES.admin || role === ROLES.editor || (role === ROLES.user && isOwner)) {
+    if (role === ROLES.ADMIN || role === ROLES.EDITOR || (role === ROLES.USER && isOwner)) {
       return next();
     }
 
