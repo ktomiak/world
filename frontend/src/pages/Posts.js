@@ -127,7 +127,7 @@ export default function Posts({ token, currentUser }) {
             <h4>{p.title}</h4>
             <p>{p.content}</p>
             <small>
-              Autor: {p.author} • {new Date(p.createdAt).toLocaleString()}
+              Autor: {p.author} • {new Date(p.updatedAt).toLocaleString()}
               {p.isEdited && <em style={{ color: "orange" }}> (edytowany)</em>}
               {p.isDeleted && <em style={{ color: "red" }}> (usunięty)</em>}
             </small>
