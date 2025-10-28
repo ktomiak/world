@@ -1,0 +1,61 @@
+.admin-navbar {
+  display: flex;
+  gap: 1rem;
+  background: #333;
+  color: white;
+  padding: 0.5rem 1rem;
+}
+
+.admin-navbar a {
+  color: white;
+  text-decoration: none;
+}
+
+.admin-navbar a.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.tasks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.modal {
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background: rgba(0,0,0,0.5);
+  display:flex; align-items:center; justify-content:center;
+}
+
+.task-form {
+  background:white;
+  padding:1rem;
+  border-radius:8px;
+  display:flex;
+  flex-direction:column;
+  gap:0.5rem;
+}
+.admin-tasks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px;
+}
+
+.add-btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.add-btn:hover {
+  background-color: #45a049;
+}

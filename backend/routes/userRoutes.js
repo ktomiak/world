@@ -1,5 +1,5 @@
 import express from "express";
-import { getMe, updateMe, getAllUsers, getRoles, updateUserRoles } from "../controllers/userController.js";
+import { getMe, updateMe, getAllUsers, getAllAdminUsers, getRoles, updateUserRoles } from "../controllers/userController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 import { requireRoles } from "../middleware/roleMiddleware.js";
 import { ROLES } from "../constants/roles.js";
@@ -15,6 +15,7 @@ router.put("/me", authMiddleware, updateMe);
 
 router.get("/roles", authMiddleware, requireRoles(ROLES.ADMIN), getRoles);
 router.get("/", authMiddleware, requireRoles(ROLES.ADMIN), getAllUsers);
+router.get("/admin", authMiddleware, requireRoles(ROLES.ADMIN), getAllAdminUsers);
 router.put("/:id", authMiddleware, requireRoles(ROLES.ADMIN), updateUserRoles);
 
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { getAllUsers, updateUserRole, getRoles } from "../api";
+import { getAllUsers, updateUserRole, getRoles } from "../../api";
+import NavbarAdmin from "../../components/NavbarAdmin";
 
 export default function AdminPanel({ token }) {
   const [users, setUsers] = useState([]);
@@ -34,36 +35,38 @@ export default function AdminPanel({ token }) {
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
-    <div>
-      <h2>⚙️ Panel administratora</h2>
-      <table style={{ borderCollapse: "collapse", width: "100%" }}>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nazwa użytkownika</th>
-            <th>Email</th>
-            <th>Rola</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((u) => (
-            <tr key={u.id}>
-              <td>{u.id}</td>
-              <td>{u.username}</td>
-              <td>{u.email}</td>
-              <td>
-                <select value={u.role} onChange={(e) => handleRoleChange(u.id, e.target.value)}>
-                  {roles.map((r) => (
-                    <option key={r} value={r}>
-                      {r}
-                    </option>
-                  ))}
-                </select>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <div id="admin-user">
+  <NavbarAdmin />
+  <h2>⚙️ Użytkownicy</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nazwa użytkownika</th>
+        <th>Email</th>
+        <th>Rola</th>
+      </tr>
+    </thead>
+    <tbody>
+      {users.map((u) => (
+        <tr key={u.id}>
+          <td>{u.id}</td>
+          <td>{u.username}</td>
+          <td>{u.email}</td>
+          <td>
+            <select value={u.role} onChange={(e) => handleRoleChange(u.id, e.target.value)}>
+              {roles.map((r) => (
+                <option key={r} value={r}>
+                  {r}
+                </option>
+              ))}
+            </select>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
   );
 }

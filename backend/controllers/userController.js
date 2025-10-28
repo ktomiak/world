@@ -50,6 +50,27 @@ export const updateMe = async (req, res) => {
   }
 };
 
+export const getAllAdminUsers = async (req, res) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ error: "Brak autoryzacji" });
+    }
+
+    if (req.user.role !== "admin") {
+      return res.status(403).json({ error: "Brak uprawnień" });
+    }
+    const users = await User.findAll({
+      attributes: ["id", "username", "email", "role", "createdAt"],
+      where: { role: ROLES.ADMIN },
+    });
+
+    res.json(users); // <-- tablica!
+  } catch (err) {
+    console.error("Błąd getAllAdminUsers:", err);
+    res.status(500).json({ error: "Nie udało się pobrać listy użytkowników" });
+  }
+};
+
 export const updateUserRoles = async (req, res) => {
 
   const { id } = req.params;

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { getMe, updateMe } from "../api";
+import "../styles/profile.css";
 
 export default function Profile({ token }) {
   const [user, setUser] = useState(null);
@@ -34,33 +35,34 @@ export default function Profile({ token }) {
   if (!user) return <p>Ładowanie...</p>;
 
   return (
-    <div>
-      <h2>Profil użytkownika</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email: </label>
-          <input type="text" value={user.email} disabled />
-        </div>
-        <div>
-          <label>Username: </label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Nowe hasło: </label>
-          <input
-            type="password"
-            value={password}
-            placeholder="Wpisz nowe hasło jeśli chcesz zmienić"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit">Zapisz</button>
-      </form>
-      <p>{msg}</p>
-    </div>
+    <form className="profile-form" onSubmit={handleSubmit}>
+  <div className="form-row">
+    <label>Email:</label>
+    <input type="text" value={user.email} disabled />
+  </div>
+
+  <div className="form-row">
+    <label>Username:</label>
+    <input
+      type="text"
+      value={username}
+      onChange={(e) => setUsername(e.target.value)}
+    />
+  </div>
+
+  <div className="form-row">
+    <label>Nowe hasło:</label>
+    <input
+      type="password"
+      value={password}
+      placeholder="Wpisz nowe hasło jeśli chcesz zmienić"
+      onChange={(e) => setPassword(e.target.value)}
+    />
+  </div>
+
+  <button type="submit">Zapisz</button>
+  <p id="profile-msg">{msg}</p>
+</form>
+
   );
 }

@@ -1,0 +1,181 @@
+/* posts.css */
+
+#posts-page {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+#posts-page h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Filtry i sortowanie */
+#posts-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+#posts-filters label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: bold;
+}
+
+#posts-filters select,
+#posts-filters input[type="text"] {
+  padding: 4px 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+#posts-filters select:focus,
+#posts-filters input[type="text"]:focus {
+  border-color: #4caf50;
+}
+
+#posts-filters input[type="checkbox"] {
+  margin-right: 4px;
+}
+
+/* Lista postów */
+#posts-list {
+  list-style: none;
+  padding: 0;
+}
+
+#posts-list li {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
+#posts-list h4 {
+  margin: 0 0 5px 0;
+  color: #222;
+}
+
+#posts-list p {
+  margin: 0 0 5px 0;
+  line-height: 1.4;
+}
+
+#posts-list small {
+  color: #666;
+}
+
+#posts-list small em {
+  font-style: normal;
+  margin-left: 5px;
+}
+
+#posts-list small em.edited {
+  color: orange;
+}
+
+#posts-list small em.deleted {
+  color: red;
+}
+
+/* Przyciski edycji/usuwania */
+.post-actions button {
+  margin-right: 8px;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.post-actions button:hover {
+  opacity: 0.85;
+}
+
+.post-actions button.edit {
+  background-color: #4caf50;
+  color: white;
+}
+
+.post-actions button.delete {
+  background-color: #f44336;
+  color: white;
+}
+
+/* Popup edycji */
+#edit-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+#edit-popup .popup-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+}
+
+#edit-popup input[type="text"],
+#edit-popup textarea {
+  width: 100%;
+  padding: 6px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  resize: vertical;
+}
+
+#edit-popup input[type="text"]:focus,
+#edit-popup textarea:focus {
+  border-color: #4caf50;
+}
+
+#edit-popup .popup-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+#edit-popup .popup-buttons button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: opacity 0.3s;
+}
+
+#edit-popup .popup-buttons button.save {
+  background-color: #4caf50;
+  color: white;
+}
+
+#edit-popup .popup-buttons button.cancel {
+  background-color: #f44336;
+  color: white;
+}
+
+#posts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}

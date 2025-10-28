@@ -6,27 +6,28 @@ import Navbar from "./components/Navbar";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Posts from "./pages/Posts";
-import AddPost from "./pages/AddPost";
 import Profile from "./pages/Profile";
-import AdminPanel from "./pages/AdminPanel";
+import AdminPanel from "./pages/Admin/AdminUsers";
+import AdminTasks from "./pages/Admin/AdminTasks";
+import AdminMyTasks from "./pages/Admin/AdminMyTasks";
+import AdminChat from "./pages/Admin/AdminChat";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [isAdmin, setIsAdmin] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
 
-  // 🔹 Dodaj ten useEffect:
   useEffect(() => {
     if (token) {
       try {
         const user = jwtDecode(token);
-        console.log("Zdekodowany token:", user);
+        //console.log("Zdekodowany token:", user);
         setCurrentUser(user);
         setIsAdmin(user.role === "admin");
       } catch (err) {
-        console.error("Błąd dekodowania tokena:", err);
+        //console.error("Błąd dekodowania tokena:", err);
         setIsAdmin(false);
-         setCurrentUser(null);
+        setCurrentUser(null);
       }
     } else {
       setIsAdmin(false);
@@ -45,6 +46,8 @@ function App() {
     localStorage.removeItem("token");
   };
 
+  
+
   return (
     <div style={{ padding: 20 }}>
       <Navbar token={token} isAdmin={isAdmin} onLogout={handleLogout} />
@@ -58,12 +61,20 @@ function App() {
           element={token ? <Profile token={token} /> : <Navigate to="/login" />}
         />
         <Route
-          path="/add"
-          element={token ? <AddPost token={token} /> : <Navigate to="/login" />}
+          path="/admin/users"
+          element={isAdmin ? <AdminPanel token={token} /> : <Navigate to="/posts" />}
         />
         <Route
-          path="/admin"
-          element={isAdmin ? <AdminPanel token={token} /> : <Navigate to="/posts" />}
+          path="/admin/tasks"
+          element={isAdmin ? <AdminTasks token={token} /> : <Navigate to="/posts" />}
+        />
+        <Route
+          path="/admin/my-tasks"
+          element={isAdmin ? <AdminMyTasks token={token} /> : <Navigate to="/posts" />}
+        />
+        <Route
+          path="/admin/chat"
+          element={isAdmin ? <AdminChat token={token} /> : <Navigate to="/posts" />}
         />
 
       </Routes>

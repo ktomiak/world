@@ -1,0 +1,72 @@
+/* Główny kontener navbar */
+#navbar, #navbar-admin {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ccc;
+  background-color: #f9f9f9;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+/* Lewa sekcja linków */
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.nav-left a {
+  margin-right: 15px;
+  text-decoration: none;
+  color: #333;
+  transition: color 0.2s;
+}
+
+.nav-left a:hover {
+  color: #007bff;
+}
+
+/* Prawa sekcja linków / przycisków */
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.nav-right button {
+  background-color: #ff4d4f;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.nav-right button:hover {
+  background-color: #ff7875;
+}
+
+/* Responsywność */
+@media (max-width: 600px) {
+  #navbar, #navbar-admin {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-left, .nav-right {
+    margin-top: 5px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-left a {
+    margin-right: 0;
+    margin-bottom: 5px;
+  }
+
+  .nav-right button {
+    margin-top: 5px;
+  }
+}
